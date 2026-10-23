@@ -53,7 +53,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start space-x-2">
                 <Mail className="w-4 h-4 mt-1 text-amber-400 flex-shrink-0" />
-                <span>info@rohitsolar.com</span>
+                <span>manalnarayan@gmail.com</span>
               </li>
             </ul>
           </div>

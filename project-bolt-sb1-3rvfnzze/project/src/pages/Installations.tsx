@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { MapPin, Zap, Sun, TrendingUp } from 'lucide-react';
 import { supabase, Installation } from '../lib/supabase';
 import InstallationCarousel from '../components/InstallationCarousel';
+import ImagePreviewModal from '../components/ImagePreviewModal';
 
 export default function Installations() {
   const [installations, setInstallations] = useState<Installation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchInstallations();
@@ -68,13 +70,18 @@ export default function Installations() {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow"
               >
                 {installation.images && installation.images.length > 0 ? (
-                  <div className="h-56 bg-gradient-to-br from-yellow-100 to-orange-100">
+                  <button
+                    type="button"
+                    className="h-56 w-full cursor-zoom-in bg-gradient-to-br from-yellow-100 to-orange-100"
+                    onClick={() => setPreviewImage(installation.images[0])}
+                    aria-label={`Preview ${installation.title || 'solar installation'}`}
+                  >
                     <img
                       src={installation.images[0]}
                       alt={installation.title || 'Solar installation'}
                       className="w-full h-full object-cover"
                     />
-                  </div>
+                  </button>
                 ) : (
                   <div className="h-56 bg-gradient-to-br from-yellow-100 to-orange-100 flex items-center justify-center">
                     <Sun className="w-16 h-16 text-orange-400" />
@@ -136,6 +143,12 @@ export default function Installations() {
           </div>
         )}
       </div>
+
+      <ImagePreviewModal
+        image={previewImage}
+        alt="Solar installation preview"
+        onClose={() => setPreviewImage(null)}
+      />
     </div>
   );
 }

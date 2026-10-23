@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight, MapPin, ExternalLink, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useLanguage } from '../contexts/LanguageContext';
+import ImagePreviewModal from './ImagePreviewModal';
 
 const defaultInstallations = [
   { id: '1', title: '3.3 kW Residential Rooftop', location: 'Cidco, Chh. Sambhajinagar', images: ['https://ik.imagekit.io/broehit/Rohit%20Solar/Cust25.jpeg'] },
@@ -17,6 +18,7 @@ export default function InstallationCarousel() {
   const { t } = useLanguage();
   const [items, setItems] = useState(defaultInstallations);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchInstallations() {
@@ -80,14 +82,19 @@ export default function InstallationCarousel() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {visibleSlides.map((item, index) => (
             <div key={`${item.id}-${index}`} className="bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden border border-white/15 hover:border-amber-400/50 shadow-xl group hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
-              <div className="relative h-52 overflow-hidden bg-slate-950">
+              <button
+                type="button"
+                className="relative h-52 w-full cursor-zoom-in overflow-hidden bg-slate-950 text-left"
+                onClick={() => setPreviewImage(item.images[0])}
+                aria-label={`Preview ${item.title}`}
+              >
                 <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                 <div className="absolute inset-0 " />
                 <div className="absolute top-3 left-3 flex items-center space-x-1.5 bg-slate-950/80 backdrop-blur-md text-amber-300 px-3 py-1 rounded-full text-xs font-semibold border border-white/10">
                   <MapPin className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
                   <span className="truncate max-w-[180px]">{item.location}</span>
                 </div>
-              </div>
+              </button>
               <div className="p-4 flex flex-col justify-between flex-1">
                 <h3 className="text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-2">{item.title}</h3>
                 <div className="pt-3 mt-3 border-t border-white/10 flex items-center justify-between text-xs">
@@ -101,6 +108,12 @@ export default function InstallationCarousel() {
             </div>
           ))}
         </div>
+
+        <ImagePreviewModal
+          image={previewImage}
+          alt="Solar installation preview"
+          onClose={() => setPreviewImage(null)}
+        />
 
         <div className="mt-8 flex justify-center space-x-2">
           {items.map((_, idx) => (
