@@ -1,0 +1,12 @@
+{
+  "name": "rohit-solar",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix project-bolt-sb1-3rvfnzze/project run dev",
+    "build": "npm --prefix project-bolt-sb1-3rvfnzze/project run build",
+    "preview": "npm --prefix project-bolt-sb1-3rvfnzze/project run preview",
+    "typecheck": "npm --prefix project-bolt-sb1-3rvfnzze/project run typecheck",
+    "start": "npm --prefix project-bolt-sb1-3rvfnzze/project run dev"
+  }
+}

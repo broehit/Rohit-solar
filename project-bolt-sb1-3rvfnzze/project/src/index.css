@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :lang(mr),
+  html[lang="mr"],
+  html[lang="mr"] body,
+  .lang-mr {
+    font-family: 'Tiro Devanagari Marathi', serif, system-ui, sans-serif;
+  }
+}
+
+/* Ensure Tiro Devanagari Marathi font applies cleanly for Marathi translation mode */
+html[lang="mr"] body,
+html[lang="mr"] .font-sans,
+.lang-mr body,
+.lang-mr .font-sans {
+  font-family: 'Tiro Devanagari Marathi', serif, system-ui, sans-serif !important;
+}
+
