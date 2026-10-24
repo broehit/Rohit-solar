@@ -72,7 +72,7 @@ const slides = [
 
 export default function HeroCarousel() {
   const { t } = useLanguage();
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(2);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentSlide((p) => (p + 1) % slides.length), 5500);
